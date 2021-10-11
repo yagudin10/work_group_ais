@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %} Информация по кадрам {% endblock %}
+{% block content %}
+
+
+<h1>Информация по кадрам</h1><br>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="input-group">
+  <input type="file" title="Загрузитe файл Excel" 
+  name="excel_file" 
+  required="required" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+  <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Отправить</button>
+</div>
+</form>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %} 23 {% endblock %}
+{% block content %}
+<h1>23 распоряжение</h1><br>
+
+<form method="post">
+{% csrf_token %}
+<!-- <text>Выбрать филиал</text><br>
+<select name="name" id="12">
+    {% for m in model_context %}
+        <option value="{{m.name}}">{{m.name}}</option>
+    {% endfor %}
+</select><br> -->
+<p>
+<label>Выбрать даты, за которую необходимо выгрузить информацию</label>
+</p>
+<ul>
+<p>Дата начала {{date_form.date1_field}}</p>
+<p>Дата окончания {{date_form.date2_field}}</p>
+<p><button type="submit" class="btn btn-outline-secondary">Сформировать</button></p>
+</form>
+{% endblock %}

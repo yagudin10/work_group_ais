@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} Главная {% endblock %}
+{% block content %}
+
+
+
+<div class="d-flex align-items-start">
+    <div class="nav flex-column nav-pills nav-pills-link-active-color:gray-200 mt-5 me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active link-dark" id="v-pills-report-tab" data-bs-toggle="pill" data-bs-target="#v-pills-report" type="button" role="tab" aria-controls="v-pills-report" aria-selected="true">Отчеты</button>
+        <button class="nav-link link-dark" id="v-pills-parsing-tab" data-bs-toggle="pill" data-bs-target="#v-pills-parsing" type="button" role="tab" aria-controls="v-pills-parsing" aria-selected="false">Иные данные</button>
+    </div>
+    <div class="tab-content" id='v-pills-tabContent'>
+        <div class="tab-pane fade show active" id="v-pills-report" role="tabpanel" aria-labelledby="v-pills-report-tab">
+            <h1 class="display-6">Отчеты Q-matic</h1>
+            <a class="nav-link" href="nearest_appointment_date/">Отчет по ближайшей дате записи</a>
+            <a class="nav-link" href="talon/">Отчет по талонам</a>
+            <a class="nav-link" href="app/">Отчет по предварительной записи</a>
+            <h1 class="display-6">Отчеты ПК-ПВД</h1>
+            <a class="nav-link" href="sheetspk/">Отчет по листам</a>
+            <h1 class="display-6">Отчеты СИЭР (Пентахо)</h1>
+            <a class="nav-link" href="mrs/">ПВК с разделением на типы заявителей (для МРС)</a>
+            <a class="nav-link" href="add23/">23 распоряжение по листам</a>
+            <a class="nav-link" href="adm/">Отчет по принятым делам от ОМСУ (услуги Росреестра)</a>
+            <a class="nav-link" href="otchet/"><i>Непонятный отчет</i></a>
+        </div>
+        <div class="tab-pane fade" id="v-pills-parsing" role="tabpanel" aria-labelledby="v-pills-parsing-tab">
+            <h1 class="display-6">Данные из СПЭР</h1>
+            <a class="nav-link" href="ogv_with_st/">Организации</a>
+            <a class="nav-link" href="stend_sper/">Регламенты</a>
+            <a class="nav-link" href="class_serv/">Классификационные услуги</a>
+            <a class="nav-link" href="kz/">Комплексные услуги</a>
+            <a class="nav-link" href="mvz/">МВ-запросы</a>
+            <h1 class="display-6">Данные из СИЭР</h1>
+            <a class="nav-link" href="sier_mejv_serv/">Настройки услуг для запроса в Межвед ЛО</a>
+            <a class="nav-link" href="sier_mejv_adm/">Настройки организаций для запроса в Межвед ЛО</a>
+            <a class="nav-link" href="sier_users/">Пользователи в СИЭР</a>
+            <h1 class="display-6">Иные данные</h1>
+            <a class="nav-link" href="sved_smev/">Виды сведений федерального уровня СМЭВ3</a>
+            <a class="nav-link" href="ias/">Услуги из ИАС МКГУ</a>
+            <a class="nav-link" href="frgu/">ФРГУ по организациям и услугам</a>
+            <a class="nav-link" href="kadry/"><i>Обработанные данные по кадрам</i></a>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

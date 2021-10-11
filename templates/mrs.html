@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>МРС (прием выдача консультация)</title>
+    <!-- Загрузка статики -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+<body>
+    <main>
+        <div class="container">
+        <h1>Информация (Прием+выдача+консультация)</h1><br>
+        <form method="post">
+        {% csrf_token %}
+        <!-- <text>Выбрать филиал</text><br>
+        <select name="name" id="12">
+            {% for m in model_context %}
+                <option value="{{m.name}}">{{m.name}}</option>
+            {% endfor %}
+        </select><br> -->
+        <text>Выбрать даты, за которую необходимо выгрузить информацию</text><br>
+        Дата начала {{date_form.date1_field}}<br>
+        Дата окончания {{date_form.date2_field}}<br>
+        Статистика по
+        {{date_form.urm_field}}<br><br>        
+        <button type="submit" class="btn btn-primary">Сформировать</button>
+        </form></div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Шляпа по администрации</title>
+    <!-- Загрузка статики -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+<body>
+    <main>
+        <p>
+            <div class="container">
+                <h1>Выгрузка большого отчета (не знаю, зачем он)</h1><br>
+        </p>
+        <form method="post">
+        {% csrf_token %}
+        <!-- <text>Выбрать филиал</text><br>
+        <select name="name" id="12">
+            {% for m in model_context %}
+                <option value="{{m.name}}">{{m.name}}</option>
+            {% endfor %}
+        </select><br> -->
+        <p>
+        <label>Выбрать даты, за которую необходимо выгрузить информацию</label>
+        </p>
+        <ul>
+        <p>Дата начала {{date_form.date1_field}}</p>
+        <p>Дата окончания {{date_form.date2_field}}</p>
+        <p><button type="submit" class="btn btn-primary">Сформировать</button></p>
+        </form></div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+.env
+.env.base1
+.env.ias
+.env.pkpvd
+.env.qmatic
+.env.sier
+.env
+.env.base2
+db.sqlite3

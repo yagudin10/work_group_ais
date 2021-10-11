@@ -1,0 +1,1 @@
+SELECT login, name, active FROM sier_users
