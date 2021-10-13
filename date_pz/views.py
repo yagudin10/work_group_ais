@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from dotenv import dotenv_values
+from sqlalchemy import create_engine
 import io
 import json
 import os
@@ -433,8 +434,10 @@ def pk_data(ip, date1, date2):
     )
     with BytesIO(response1.content) as fh:
         df = pd.io.excel.read_excel(fh, usecols = 'C,I:L', skiprows = 3, header = 0, engine='openpyxl')
-    df['Итого листов (подлинников)'] = df['Кол-во экз. документа']*df['Кол-во листов в подлиннике']
-    df['Итого листов (копии)'] = df['Кол-во экз. копии документа']*df['Кол-во листов в копии']
+    if not df.empty:
+        df['Дата'] = date_1
+        df['Итого листов (подлинников)'] = df['Кол-во экз. документа']*df['Кол-во листов в подлиннике']
+        df['Итого листов (копии)'] = df['Кол-во экз. копии документа']*df['Кол-во листов в копии']
     return df
 
 # a function that return an .xlsx-file with an information about number of sheets used in all branches from a PKPVD program
@@ -449,28 +452,34 @@ def pk_sheet(request):
             date_begin = form.cleaned_data['date1_field']
             date_end = form.cleaned_data['date2_field']
         z = (date_end - date_begin).days + 1
-        df_itog = pd.DataFrame(
-            columns=[
-                'Наименование организации', 
-                'Кол-во экз. документа',
-                'Кол-во листов в подлиннике', 
-                'Кол-во экз. копии документа',
-                'Кол-во листов в копии', 
-                'Итого листов (подлинников)',
-                'Итого листов (копии)'
-            ]
-        )
-        for i in range(z):
-            date1 = (date_begin + timedelta(i))
-            data_1 = pk_data(os.getenv("PKIP1"), date1, date1)
-            data_2 = pk_data(os.getenv("PKIP2"), date1, date1)
-            data = pd.concat([data_1, data_2])
-            df_itog = df_itog.append(data)
+        date_1 = str(time.mktime(date_begin.timetuple())*1000)
+        date_2 = str(time.mktime(date_end.timetuple())*1000)
+        engine = create_engine('postgresql{}'.format(os.getenv("DATABASE_URL")[4:]))
+        query = readSqlScript('pksheet')
+        query = query.replace('date_1', date_1).replace('date_2', date_2)
+        df = pd.read_sql(query, con=engine)
+#        df_itog = pd.DataFrame(
+#            columns=[
+#                'Наименование организации', 
+#                'Кол-во экз. документа',
+#                'Кол-во листов в подлиннике', 
+#                'Кол-во экз. копии документа',
+#                'Кол-во листов в копии', 
+#                'Итого листов (подлинников)',
+#                'Итого листов (копии)'
+#            ]
+#        )
+#        for i in range(z):
+#            date1 = (date_begin + timedelta(i))
+#            data_1 = pk_data(os.getenv("PKIP1"), date1, date1)
+#            data_2 = pk_data(os.getenv("PKIP2"), date1, date1)
+#            data = pd.concat([data_1, data_2])
+#            df_itog = df_itog.append(data)
         sio = BytesIO()
-        df_itog = df_itog.groupby(['Наименование организации']).sum()
+#        df_itog = df_itog.groupby(['Наименование организации']).sum()
         pd.io.formats.excel.ExcelFormatter.header_style = None
         PandasWriter = pd.ExcelWriter(sio, engine='xlsxwriter')
-        df_itog.to_excel(PandasWriter)
+        df.to_excel(PandasWriter, index=None)
         # Formats Excel sheet
         workbook = PandasWriter.book
         worksheet = PandasWriter.sheets['Sheet1']
